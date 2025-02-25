@@ -1,0 +1,20 @@
+name: Notificar a Discord
+
+on: 
+  push:
+    branches:
+      - master  # Cambia esto si quieres escuchar otra rama, como `develop`
+      - desarrollo
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar mensaje a Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d '{
+                "content": "🚀 **Nuevo commit en el repositorio!**\n\n**Autor:** ${{ github.actor }}\n\n**Mensaje:** ${{ github.event.head_commit.message }}\n\n🔗 [Ver commit](${{ github.event.head_commit.url }})"
+              }' \
+          https://discord.com/api/webhooks/1344085088480133221/waSeQhQ_sHAALfY9ARoSMigLp_vYdY3XyhAXQM46YYeIsqRoDIanciBift69OJKyJk9K
